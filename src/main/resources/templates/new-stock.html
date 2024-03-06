@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Création d'un lot</title>
+</head>
+<body>
+<h1>Création d'un lot périssable</h1>
+
+<h2 th:if="${error}" th:text="${error}"></h2>
+
+<div th:if="${savedStock}" th:text="'The stock has been saved.'"></div>
+
+<form th:action="@{/stock/create}" th:object="${stock}" method="post">
+    <label for="article">Référence du produit:</label>
+    <input type="text" id="article" name="article" th:field="*{article}">
+    <br>
+    <label for="bestBefore">Date de péremption:</label>
+    <input type="date" id="bestBefore" name="bestBefore" th:field="*{bestBefore}">
+    <br>
+    <label for="quantity">Quantité:</label>
+    <input type="number" id="quantity" name="quantity" th:field="*{quantity}">
+    <br>
+
+    <input type="submit" value="Sauvegarder">
+</form>
+
+<a th:href="@{/}"><div>Recherche</div></a>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Retour de commande</title>
+</head>
+<body>
+
+<h1 th:text="'Retour de la commande n°' + ${order.id}"></h1>
+<div th:text="'Status :' + ${order.status}"></div>
+<div th:text="${message}"></div>
+
+<form th:action="@{/mock-order/{id}(id=${order.id})}" th:method="delete">
+    <input type="hidden" name="date" th:value="${order.receptionDate}" />
+    <input type="hidden" name="status" th:value="${order.status}" />
+    <table>
+        <thead>
+            <tr>
+                <th>Quantité</th>
+                <th>Produit</th>
+                <th>Référence</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="mapEntry : ${order.articles}">
+                <td>
+                    <input type="hidden" name="quantities" th:value="${mapEntry.value}" th:text="${mapEntry.value}" readonly />
+                </td>
+                <td th:text="${mapEntry.key.name}"></td>
+                <td>
+                    <input type="hidden" name="articleIds" th:value="${mapEntry.key.reference}" th:text="${mapEntry.key.reference}" readonly />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <input type="submit" value="Retourner la commande"/>
+</form>
+
+<br>
+<a th:href="@{/}"><div>Recherche</div></a>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <form th:fragment="formulaire (action, article, isCreate)" th:action="${action}" th:object="${article}" method="post">
+        <label for="category">Catégorie:</label>
+        <select id="category" name="category" th:field="*{category}">
+            <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}" th:selected="${category} == ${cat}"></option>
+        </select>
+        <br>
+        <label for="articleName">Nom de l'article :</label>
+        <input type="text" id="articleName" name="name" th:field="*{name}" value="${name}">
+        <br>
+        <div th:if="${isCreate}">
+          <label for="articleReference">Référence du produit :</label>
+          <input type="text" id="articleReference" name="reference" th:field="*{reference}" value="${reference}">
+          <br>
+        </div>
+        <label for="articleIsPerishable">Produit périssable :</label>
+        <select id="articleIsPerishable" name="isPerishable" th:field="*{isPerishable}">
+            <option th:value="true" th:text="Oui"></option>
+            <option th:value="false" th:text="Non"></option>
+        </select>
+        <br>
+        <input type="submit" value="Sauvegarder">
+    </form>
+  </body>
+</html>

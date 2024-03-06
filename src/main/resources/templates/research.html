@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page de recherche de produits</title>
+</head>
+<body>
+<h1>Recherche de produits</h1>
+<form th:action="@{/articles}" th:object="${article}" method="get">
+    <label for="category">Catégorie:</label>
+    <select id="category" name="category" th:field="*{category}">
+        <option value="">Aucune</option>
+        <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+    </select>
+    <br>
+    <label for="articleName">Nom de l'article :</label>
+    <input type="text" id="articleName" name="name" th:field="*{name}">
+    <br>
+    <label for="articleReference">Référence du produit :</label>
+    <input type="text" id="articleReference" name="reference" th:field="*{reference}">
+    <br>
+    <input type="submit" value="Rechercher">
+</form>
+
+<br/>
+<a th:href="@{/mock-order}"><div>Commander</div></a>
+<br/>
+<a th:href="@{/articles/perishables}"><div>Articles périmés</Article></div></a>
+
+</body>
+</html>

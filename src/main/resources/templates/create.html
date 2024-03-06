@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Création d'un produit</title>
+</head>
+<body>
+<h1>Création d'un produit</h1>
+
+<h2 th:if="${error}" th:text="${error}"></h2>
+
+<div th:if="${savedArticle}" th:text="'The article ' + ${savedArticle} + ' has been saved.'"></div>
+
+<div th:replace="~{article_form :: formulaire (@{/articles/create}, ${article}, true)}"></div>
+
+<a th:href="@{/}"><div>Recherche</div></a>
+
+</body>
+</html>

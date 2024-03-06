@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Résultats de la recherche de produits</title>
+</head>
+<body>
+<h1>Résultats de la recherche</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nom du produit</th>
+        <th>Référence du produit</th>
+        <th>Catégorie</th>
+        <th>Stock</th>
+        <th>Produit périssable</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="article : ${articles}">
+        <td th:text="${article.name}"></td>
+        <td><a th:href="@{/articles/{reference}(reference=${article.reference})}" th:text="${article.reference}"></a></td>
+        <td th:text="${article.category}"></td>
+        <td th:text="${article.getStock()}"></td>
+        <td th:text="${article.isPerishable}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:if="${totalPages > 1}">
+    <div class="row col-sm-10">
+        <div class="col-sm-2">
+            Total Rows: [[${totalItems}]]
+        </div>
+        <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{/articles(pageNumber=${i})}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage} > 1" th:href="@{/articles(pageNumber=${currentPage - 1})}">Previous</a>
+            <span th:unless="${currentPage} > 1">Previous</span>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{/articles(pageNumber=${currentPage + 1})}">Next</a>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+        </div>
+
+        <div class="col-sm-1">
+            <a th:if="${currentPage} > 1" th:href="@{/articles(pageNumber=${1})}">First</a>
+            <span th:unless="${currentPage} > 1">First</span>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{/articles(pageNumber=${totalPages})}">Last</a>
+            <span th:unless="${currentPage < totalPages}">Last</span>
+        </div>
+    </div>
+</div>
+
+<br>
+<a th:href="@{/articles/create}"><div>Nouvel article</div></a>
+<br>
+<a th:href="@{/stock/create}"><div>Nouveau lot périssable</div></a>
+<br>
+<a th:href="@{/}"><div>Recherche</div></a>
+
+</body>
+</html>

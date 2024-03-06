@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modification du produit</title>
+</head>
+<body>
+<h1 th:text="'Modification du produit ' + ${article.name}"></h1>
+
+<h2 th:if="${error}" th:text="${error}"></h2>
+
+<div th:replace="~{article_form :: formulaire (@{/articles/{reference}(reference=${article.reference})}, ${article}, false)}"></div>
+
+<br>
+<a th:href="'/stock/' + ${reference}">Modifier les lots</a>
+<br>
+<a th:href="@{/}"><div>Recherche</div></a>
+
+
+</body>
+</html>

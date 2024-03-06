@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modification des lots</title>
+</head>
+<body>
+<h1>Modification des lots</h1>
+
+<h2 th:if="${error}" th:text="${error}"></h2>
+
+<form th:action="'/stock/' + ${article.reference}" th:object="${stockWrapper}" method="post">
+    <div th:each="stock, itemStat : *{stocks}">
+        <label th:text="'Lot n°' + ${itemStat.index + 1}" th:for="'stock' + ${stock.id}"></label>
+        <input type="number" th:id="'stock' + ${id}" th:field="*{stocks[__${itemStat.index}__].quantity}"
+               th:value="*{stocks[__${itemStat.index}__].quantity}"/>
+        <input th:if="${article.isPerishable}" th:field="*{stocks[__${itemStat.index}__].bestBefore}"/>
+        <input th:id="'stock' + ${id}" th:field="*{stocks[__${itemStat.index}__].id}" th:hidden="true"/>
+        <input th:id="'stock' + ${id}" th:field="*{stocks[__${itemStat.index}__].article}" th:hidden="true"/>
+        <br/>
+    </div>
+    <input type="submit" value="Sauvegarder">
+</form>
+<form th:action="'/stock/' + ${article.reference} + '/new'" th:object="${stockWrapper}" method="post">
+    <div th:each="stock, itemStat : *{stocks}">
+        <input th:field="*{stocks[__${itemStat.index}__].quantity}" th:hidden="true"/>
+        <input th:field="*{stocks[__${itemStat.index}__].id}" th:hidden="true"/>
+        <input th:field="*{stocks[__${itemStat.index}__].article}" th:hidden="true"/>
+    </div>
+    <input type="submit" value="Ajouter un lot">
+</form>
+<br>
+<a th:href="@{/articles/{reference}(reference=${article.reference})}"><div>Retour à l'article</div></a>
+<a th:href="@{/}"><div>Recherche</div></a>
+
+</body>
+</html>

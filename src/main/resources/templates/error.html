@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <body>
+
+        <header>
+            <h1>Une erreur est survenue</h1>
+        </header>
+
+        <section>
+            <p>Une erreur inattendue s'est produite.</p>
+
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                <p th:text="${error}">Message d'erreur</p>
+            </div>
+        </section>
+        <br>
+        <a th:href="@{/}"><div>Recherche</div></a>
+
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Articles périssables</title>
+</head>
+<body>
+<h1>Liste des articles périssables</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nom du produit</th>
+        <th>Référence du produit</th>
+        <th>Catégorie</th>
+        <th>Date de péremption</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="stock : ${stocks}">
+        <td th:text="${stock.getArticle().name}"></td>
+        <td th:text="${stock.getArticle().reference}"></td>
+        <td th:text="${stock.getBestBefore()}"></td>
+        <td>
+            <form th:action="@{/stock/{id}(id=${stock.id})}" th:method="delete">
+                <input type="submit" value="Supprimer"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:if="${totalPages > 1}">
+    <div class="row col-sm-10">
+        <div class="col-sm-2">
+            Total Rows: [[${totalItems}]]
+        </div>
+        <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{/articles(noPage=${i})}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{/articles(noPage=${currentPage + 1})}">Next</a>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+        </div>
+
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{/articles(noPage=${totalPages})}">Last</a>
+            <span th:unless="${currentPage < totalPages}">Last</span>
+        </div>
+    </div>
+</div>
+<br>
+<a th:href="@{/}"><div>Recherche</div></a>
+
+</body>
+</html>

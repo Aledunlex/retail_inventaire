@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Commande</title>
+</head>
+<body>
+<h1>Valider la commande</h1>
+
+<!--
+MOCK du panier d'un client qui place commande pour une pomme, une banane, 2 steaks de bœuf;
+Récupération des informations de la commande dans le OrderController auquel on passe la quantité et le nom de
+ l'article (on pourrait envisager de plutôt passer l'id ou la référence, selon comment on finit par gérer les stocks)
+-->
+
+<div th:if="${success}" th:text="${success}" class="success-message"></div>
+
+<div th:if="${error}" th:text="${error}" class="error-message"></div>
+
+    <tbody>
+    <form th:action="@{/mock-order/validateOrder}" method="post">
+      <table>
+        <thead>
+        <tr>
+          <th>Article</th>
+          <th>Quantité</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry : ${articles}">
+          <td><input type="hidden" name="articleIds" th:value="${entry.key.reference}" />
+            <span th:text="${entry.key.name}"></span>
+          </td>
+          <td><input type="number" name="quantities" th:value="${entry.value}" /></td>
+        </tr>
+        </tbody>
+      </table>
+      <button type="submit">Valider la commande</button>
+    </form>
+    <br>
+    <a th:href="@{/}"><div>Recherche</div></a>
+
+</body>
+</html>
